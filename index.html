@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=922">
+ <link rel="stylesheet" href="fonts.css">
+ <link rel="stylesheet" href="app.css">
+ <script src="app.js"></script>
+ <title>NoiseSyn - Spectral Noise Synthesizer</title>
+</head>
+<body>
+
+<h1>NoiseSyn - Spectral Noise Synthesizer</h1>
+
+<h2>Spectrum (aplitude over frequency)</h2>
+
+<div id="spectrumEditorFrame" class="functionCurveEditorFrame canvasFrame">
+ <canvas id="spectrumEditorCanvas" class="functionCurveEditor" tabindex="-1">
+ </canvas>
+</div>
+<div class="miniButtonsBelowViewer">
+ <div id="functionCurveEditorHelpButton" class="miniPseudoButton">Help</div>
+</div>
+<div id="functionCurveEditorHelpText" class="hidden helpText"></div>
+
+<h2>Amplitude curve (overall amplitude over time)</h2>
+
+<div id="amplitudeEditorFrame" class="functionCurveEditorFrame canvasFrame">
+ <canvas id="amplitudeEditorCanvas" class="functionCurveEditor" tabindex="-1">
+ </canvas>
+</div>
+
+<div class="parmBlock">
+ <div class="parmLine">
+  <label class="w130" for="sampleRate" title="Sample rate for synthesizing the output signal.">Sample rate:</label>
+  <input class="w110" id="sampleRate" type="text" required>
+  <label class="w130g" for="agcRmsLevel" title="RMS level for automatic gain control (AGC).">AGC RMS level:</label>
+  <input class="w110" id="agcRmsLevel" type="number" step="any" min="0" required>
+ </div>
+</div>
+
+<div class="actionButtons">
+ <button id="synthesizeButton">Synthesize</button>
+ <button id="synthesizeAndPlayButton">Synth + Play</button>
+</div>
+
+<h2>Output signal</h2>
+
+<div id="outputSignalViewerFrame" class="functionCurveViewerFrame canvasFrame">
+ <canvas id="outputSignalViewerCanvas" class="functionCurveViewer" tabindex="-1">
+ </canvas>
+</div>
+<div class="miniButtonsBelowViewer">
+ <div id="functionCurveViewerHelpButton" class="miniPseudoButton">Help</div>
+</div>
+<div id="functionCurveViewerHelpText" class="hidden helpText"></div>
+
+<div class="actionButtons">
+ <button id="playOutputButton">Play</button>
+ <button id="saveOutputWavFileButton">Save WAV file</button>
+</div>
+
+<div class="footer">
+ Source code: <a href="https://github.com/chdh/noise-syn">Github</a>,
+ Author: Christian d'Heureuse (chdh@inventec.ch)
+</div>
+</body>
+</html>
