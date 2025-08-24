@@ -1,3 +1,5 @@
+import * as Rfc4648 from "rfc4648";
+
 const dummyResolvedPromise = Promise.resolve();
 const numberFormat = new Intl.NumberFormat("en-US");
 
@@ -63,4 +65,16 @@ function openSaveAsDialog_old (data: ArrayBuffer, fileName: string, mimeType: st
    const clickEvent = new MouseEvent("click");
    element.dispatchEvent(clickEvent);
    setTimeout(() => URL.revokeObjectURL(url), 60000);
-   (<any>document).dummySaveAsElementHolder = element; }   // to prevent garbage collection
+   (<any>document).dummySaveAsElementHolder = element; }                       // to prevent garbage collection
+
+export function encodeBase64UrlBuf (buf: Uint8Array) : string {
+   if ((<any>buf).toBase64) {
+      return (<any>buf).toBase64({alphabet: "base64url", omitPadding: true}); }
+    else {                                                                     // fallback for old browsers
+      return Rfc4648.base64url.stringify(buf, {pad: false}); }}
+
+export function decodeBase64UrlBuf (s: string) : Uint8Array {
+   if ((<any>Uint8Array).fromBase64) {
+      return (<any>Uint8Array).fromBase64(s, {alphabet: "base64url"}); }
+    else {                                                                     // fallback for old browsers
+      return Rfc4648.base64url.parse(s, {loose: true}); }}

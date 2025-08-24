@@ -1,7 +1,9 @@
 {
    "compilerOptions": {
       "allowUnreachableCode": false,
+      "allowSyntheticDefaultImports": true,
       "alwaysStrict": true,
+      "esModuleInterop": true,
       "forceConsistentCasingInFileNames": true,
       "lib": ["ES2020", "DOM", "DOM.Iterable"],
       "module": "ES2020",
