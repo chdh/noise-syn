@@ -1,4 +1,4 @@
-// Noise synthesizer
+// Noise synthesizer kernel.
 
 import ComplexArray from "dsp-collection/math/ComplexArray";
 import * as Fft from "dsp-collection/signal/Fft";

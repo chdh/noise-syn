@@ -15,17 +15,22 @@ function convertKnotsArray (a: number[][]) : Point[] {
 
 //--- Curve knot compression ---------------------------------------------------
 
-const enum CurveDataType {time, db, freq};
+const enum CurveDataType {
+   timeAsc,                  // time values in seconds, ascending
+   freqAsc,                  // frequency values in Hz, ascending
+   db }                      // dB values
 
 interface CurveDataTypeSpec {
    decDigits:                number;
+   ascending:                boolean;
    minValue:                 number;
    maxValue:                 number; }
 
+// Note: The x coordinates of the points are guaranteed to be ascending for all data types.
 const curveDataTypeSpecMap : Record<CurveDataType, CurveDataTypeSpec> = {
-   [CurveDataType.time]: {decDigits: 3, minValue: 0,    maxValue: 36000 },
-   [CurveDataType.db]:   {decDigits: 1, minValue: -200, maxValue: 200   },
-   [CurveDataType.freq]:  {decDigits: 0, minValue: 0,    maxValue: 100000} };
+   [CurveDataType.timeAsc]: {decDigits: 3, ascending: true,  minValue: 0,    maxValue: 36000 },
+   [CurveDataType.freqAsc]: {decDigits: 0, ascending: true,  minValue: 0,    maxValue: 100000},
+   [CurveDataType.db]:      {decDigits: 1, ascending: false, minValue: -200, maxValue: 200   }};
 
 // Returns an integer.
 function quantize (x: number, decDigits: number, minValue: number, maxValue: number) : number {
@@ -97,7 +102,7 @@ function encodeCurveDataByType (curveData: ArrayLike<number>, dataType: CurveDat
    const dts = curveDataTypeSpecMap[dataType];
    const a1 = quantizeArray(curveData, dts.decDigits, dts.minValue, dts.maxValue);
    const a2 = differentiate(a1);
-   const a3 = (dts.minValue < 0) ? a2.map(wrapSign) : a2;
+   const a3 = dts.ascending ? a2 : a2.map(wrapSign);
    const a4 = varIntEncodeArray(a3);
    const a5 = Fflate.deflateSync(a4, {level: 9});
    const b64 = Utils.encodeBase64UrlBuf(a5);
@@ -108,7 +113,7 @@ function decodeCurveDataByType (b64: string, dataType: CurveDataType) : Float64A
    const a1 = Utils.decodeBase64UrlBuf(b64);
    const a2 = Fflate.inflateSync(a1);
    const a3 = varIntDecodeArray(a2);
-   const a4 = (dts.minValue < 0) ? a3.map(unwrapSign) : a3;
+   const a4 = dts.ascending ? a3 : a3.map(unwrapSign);
    const a5 = integrate(a4);
    const a6 = dequantizeArray(a5, dts.decDigits);
    return a6; }
@@ -177,8 +182,8 @@ export function encodeAppStateUrlParms (appState: AppState) : string {
    const usp = new URLSearchParams();
    setNum(usp, "sampleRate",  appState.sampleRate,  defaultSampleRate);
    setNum(usp, "agcRmsLevel", appState.agcRmsLevel, defaultAgcRmsLevel);
-   setKnots(usp, "spectrumCurve",  appState.spectrumCurveKnots,  CurveDataType.freq, CurveDataType.db, defaultSpectrumCurveKnots);
-   setKnots(usp, "amplitudeCurve", appState.amplitudeCurveKnots, CurveDataType.time, CurveDataType.db, defaultAmplitudeCurveKnots);
+   setKnots(usp, "spectrumCurve",  appState.spectrumCurveKnots,  CurveDataType.freqAsc, CurveDataType.db, defaultSpectrumCurveKnots);
+   setKnots(usp, "amplitudeCurve", appState.amplitudeCurveKnots, CurveDataType.timeAsc, CurveDataType.db, defaultAmplitudeCurveKnots);
    return usp.toString(); }
 
 export function decodeAppStateUrlParms (urlParmsString: string) : AppState {
@@ -186,6 +191,6 @@ export function decodeAppStateUrlParms (urlParmsString: string) : AppState {
    const appState = <AppState>{};
    appState.sampleRate  = getNum(usp, "sampleRate", defaultSampleRate);
    appState.agcRmsLevel = getNum(usp, "agcRmsLevel", defaultAgcRmsLevel);
-   appState.spectrumCurveKnots  = getKnots(usp, "spectrumCurve",  CurveDataType.freq, CurveDataType.db, defaultSpectrumCurveKnots);
-   appState.amplitudeCurveKnots = getKnots(usp, "amplitudeCurve", CurveDataType.time, CurveDataType.db, defaultAmplitudeCurveKnots);
+   appState.spectrumCurveKnots  = getKnots(usp, "spectrumCurve",  CurveDataType.freqAsc, CurveDataType.db, defaultSpectrumCurveKnots);
+   appState.amplitudeCurveKnots = getKnots(usp, "amplitudeCurve", CurveDataType.timeAsc, CurveDataType.db, defaultAmplitudeCurveKnots);
    return appState; }
