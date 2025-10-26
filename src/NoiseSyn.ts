@@ -7,7 +7,7 @@ import {convertDbToAmplitude} from "dsp-collection/utils/DspUtils";
 type UniFunction = (x: number) => number;
 
 function convertDbToAmplitudeOr0 (x: number) : number {
-   return (!Number.isFinite(x) || x <= -90) ? 0 : convertDbToAmplitude(x); }
+   return (!Number.isFinite(x) || x <= -99) ? 0 : convertDbToAmplitude(x); }
 
 export function synthesize (spectrumCurveFunction: UniFunction, amplitudeCurveFunction: UniFunction, duration: number, sampleRate: number, agcRmsLevel: number) : Float64Array {
    let n = Math.round(duration * sampleRate);

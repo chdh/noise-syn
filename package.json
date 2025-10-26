@@ -9,7 +9,7 @@
       "dialog-manager": "^1.0.3",
       "dsp-collection": "^0.2.6",
       "fflate": "^0.8.2",
-      "function-curve-editor": "^1.0.17",
+      "function-curve-editor": "^1.0.18",
       "function-curve-viewer": "^1.0.26",
       "rfc4648": "^1.5.4",
       "varint": "^6.0.0",

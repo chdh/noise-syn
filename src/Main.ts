@@ -30,7 +30,7 @@ function getLastKnotX (knots: Point[]) : number | undefined {
    return knots.length ? knots[knots.length - 1].x : undefined; }
 
 function loadSpectrumCurveEditor (knots: Point[]) {
-   const editorState = <FunctionCurveEditor.EditorState>{
+   const editorState: Partial<FunctionCurveEditor.EditorState> = {
       knots:           knots,
       xMin:            0,
       xMax:            5500,
@@ -40,12 +40,14 @@ function loadSpectrumCurveEditor (knots: Point[]) {
       relevantXMin:    0,
       gridEnabled:     true,
       primaryZoomMode: FunctionCurveEditor.ZoomMode.x,
+      xAxisUnit:       "Hz",
+      yAxisUnit:       "dB",
       focusShield:     true };
    spectrumEditorWidget.setEditorState(editorState); }
 
 function loadAmplitudeCurveEditor (knots: Point[]) {
    const xMax = getLastKnotX(knots) ?? 5;
-   const editorState = <FunctionCurveEditor.EditorState>{
+   const editorState: Partial<FunctionCurveEditor.EditorState> = {
       knots:           knots,
       xMin:            0,
       xMax,
@@ -55,6 +57,8 @@ function loadAmplitudeCurveEditor (knots: Point[]) {
       relevantXMin:    0,
       gridEnabled:     true,
       primaryZoomMode: FunctionCurveEditor.ZoomMode.x,
+      xAxisUnit:       "s",
+      yAxisUnit:       "dB",
       focusShield:     true };
    amplitudeEditorWidget.setEditorState(editorState); }
 
