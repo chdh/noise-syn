@@ -31,10 +31,12 @@
 </div>
 
 <div class="parmBlock">
- <div class="parmLine">
-  <label class="w130" for="sampleRate" title="Sample rate for synthesizing the output signal.">Sample rate:</label>
+ <div class="parmField">
+  <label class="w130" for="sampleRate" title="Sample rate in Hz for synthesizing the output signal.">Sample rate [Hz]:</label>
   <input class="w110" id="sampleRate" type="text" required>
-  <label class="w130g" for="agcRmsLevel" title="RMS level for automatic gain control (AGC).">AGC RMS level:</label>
+ </div>
+ <div class="parmField">
+  <label class="w130" for="agcRmsLevel" title="Output RMS level for automatic gain control (AGC).">AGC RMS level:</label>
   <input class="w110" id="agcRmsLevel" type="number" step="any" min="0" required>
  </div>
 </div>

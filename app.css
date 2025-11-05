@@ -71,20 +71,20 @@ select:focus,
 
 .parmBlock {
    margin-top: 20px;
-   margin-bottom: 10px; }
-
-.parmLine {
+   margin-bottom: 10px;
+   max-width: 1280px;
    display: flex;
+   flex-wrap: wrap;
    align-items: baseline;
-   margin-top: 8px; }
+   column-gap: 20px;
+   row-gap: 8px; }
 
-div.parmLine input[type="checkbox"] {
+.parmField {
+   display: flex;
+   align-items: baseline; }
+
+.parmBlock input[type="checkbox"] {
    margin-left: 0; }
-
-div.parmHeading2 {
-   margin-top: 10px;
-   font-size: 13px;
-   font-weight: bold; }
 
 label[title],
 div[title] {
@@ -92,14 +92,16 @@ div[title] {
    text-underline-position: under; }
 
 div.actionButtons {
+   margin-top: 15px;
    display: flex;
+   flex-wrap: wrap;
    align-items: center;
-   margin-top: 15px; }
+   column-gap: 20px;
+   row-gap: 10px; }
 
 div.actionButtons button {
    width: 110px;
-   padding: 4px 0px;
-   margin-right: 20px; }
+   padding: 4px 0px; }
 
 div.actionButtons div {
    margin-right: 20px; }
@@ -107,41 +109,10 @@ div.actionButtons div {
 div.actionButtons label {
    margin-right: 5px; }
 
-.w50r {
-   width: 50px;
-   text-align: right; }
-.w60r {
-   width: 60px;
-   text-align: right; }
-.w80r {
-   width: 80px;
-   text-align: right; }
-.w100r {
-   width: 100px;
-   text-align: right; }
 .w110 {
    width: 110px; }
-.w120 {
-   width: 120px; }
-.w120g {
-   width: 120px;
-   margin-left: 20px; }
 .w130 {
    width: 130px; }
-.w130g {
-   width: 130px;
-   margin-left: 20px; }
-.w140r {
-   width: 140px;
-   text-align: right; }
-.w160r {
-   width: 160px;
-   text-align: right; }
-.w200 {
-   width: 200px; }
-.w250r {
-   width: 250px;
-   text-align: right; }
 
 /*--- Function curve viewers and editor --------------------------------------*/
 
@@ -156,7 +127,7 @@ div.functionCurveViewerFrame,
 div.functionCurveEditorFrame {
    margin-top: 15px;
    border: 1px solid black;
-   width: 1200px;
+   max-width: 1280px;
    height: 250px;
    resize: both;
    overflow: hidden; }
